@@ -5,6 +5,7 @@ from components.side_bar_component import SideBar
 from components.appbar_components import MyAppBar
 import matplotlib
 import matplotlib.pyplot as plt
+from custom_colors.brown_palette import Palette
 
 from flet.matplotlib_chart import MatplotlibChart
 
@@ -20,11 +21,7 @@ class DashboardPage(ft.View):
         self.params = params
         self.basket = basket
 
-        self.THEME_DARK = "#643a1e"
-        self.MID_COLOR = "#a45520"
-        self.THEME_LIGHT = "#bb824d"
-
-        self.bgcolor = self.THEME_LIGHT
+        self.bgcolor = Palette.THEME_LIGHT
         self.appbar = MyAppBar("Dashboard")
 
         # =========================================BAR CHART========================================
@@ -133,12 +130,12 @@ class DashboardPage(ft.View):
                             ft.Container(
                                 col=6,
                                 expand=True,
-                                bgcolor=self.MID_COLOR,
+                                bgcolor=Palette.MID_COLOR,
                                 content=self.chart, 
                                 # , padding=10, border_radius=5, expand=True
                             ), 
                             ft.Container(
-                                bgcolor=self.MID_COLOR,
+                                bgcolor=Palette.MID_COLOR,
                                 expand=True,
                                 col=6,
                                 height=300,

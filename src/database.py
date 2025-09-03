@@ -1,5 +1,5 @@
 import sqlite3
-
+import asyncio
 
 class Database:
     def __init__(self) -> None:
@@ -43,7 +43,8 @@ class Database:
         except Exception as e:
             print(e)
 
-    def getPantones(self):
+    async def getPantones(self):
+        await asyncio.sleep(1)
         self.cursor.execute("SELECT * FROM Pantones")
         return self.cursor.fetchall()
 

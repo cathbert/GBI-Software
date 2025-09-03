@@ -6,6 +6,7 @@ from components.appbar_components import MyAppBar
 from custom_colors.brown_palette import Palette
 from tools.pantone import loadPantoneColors
 from database import Database
+import asyncio
 
 class ToolPage(ft.View):
     def __init__(self, page:ft.Page, params:Params, basket:Basket):
@@ -16,8 +17,14 @@ class ToolPage(ft.View):
         self.page = page
         self.params = params
         self.basket = basket
-
         self.db = Database()
+        
+        # if self.page.client_storage.get("pantones") is None:
+        #     self.page.client_storage.set("pantones", asyncio.run(self.db.getPantones()))
+
+        self.page.client_storage.remove("pantones")
+
+        
 
         self.appbar = MyAppBar("Tools")
 
@@ -32,31 +39,50 @@ class ToolPage(ft.View):
                 controls=[
                     ft.Container(
                         padding=ft.padding.all(10),
-                        content=ft.TextField(
-                            fill_color=ft.Colors.with_opacity(0.2, ft.Colors.BLACK),
-                            label="Search Pantone Color", 
-                            expand=True,
-                            filled=True, 
-                            border_radius=20,
-                            bgcolor=ft.Colors.WHITE,
-                            border=ft.InputBorder.NONE,
-                            suffix_icon=ft.Icons.SEARCH,  
-                        ),
+                        content=ft.Row(
+                            controls=[
+                                ft.TextField(
+                                    fill_color=ft.Colors.with_opacity(0.2, ft.Colors.BLACK),
+                                    label="Search Pantone Color", 
+                                    expand=True,
+                                    filled=True, 
+                                    border_radius=20,
+                                    bgcolor=ft.Colors.WHITE,
+                                    border=ft.InputBorder.NONE,
+                                    suffix_icon=ft.Icons.SEARCH,  
+                                ),
+                                ft.Dropdown(
+                                    width=150,
+                                    options=[
+                                        ft.dropdown.Option("HEX"),
+                                        ft.dropdown.Option("RGB"),
+                                        ft.dropdown.Option("HSV"),
+                                        ft.dropdown.Option("LSV"),
+                                    ],
+                                    label="Color Format",
+                                    value="HEX",
+                                )
+                            ]
+                        )
                     ),
-                    ft.GridView(
-                        expand=1,
-                        runs_count=5,
-                        max_extent=200,
-                        child_aspect_ratio=0.8,
-                        spacing=5,
-                        run_spacing=5,
-                        controls=[
-                            ColorBox(
-                                pantone=color[0], 
-                                name=color[1], 
-                                color_hex=color[2]
-                            ) for color in self.db.getPantones()
-                        ]
+                    ft.Container(
+                        padding=ft.padding.only(left=10, top=-5, right=10, bottom=10),
+                        expand=True,
+                        content=ft.GridView(
+                            expand=1,
+                            runs_count=5,
+                            max_extent=200,
+                            child_aspect_ratio=0.8,
+                            spacing=5,
+                            run_spacing=5,
+                            controls=[
+                                ColorBox(
+                                    pantone=color[0], 
+                                    name=color[1], 
+                                    color_hex=color[2]
+                                ) for color in asyncio.run(self.db.getPantones())
+                            ]
+                        )
                     )
                 ]
             )

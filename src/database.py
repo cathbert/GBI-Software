@@ -25,6 +25,7 @@ class Database:
                             FOREIGN KEY (order_id) REFERENCES Orders (id)
                             )""")
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS Pantones (code TEXT UNIQUE, name TEXT UNIQUE,hex TEXT UNIQUE)""")
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS Theme (dark TEXT UNIQUE, mid TEXT UNIQUE, light TEXT UNIQUE)""")
         
     def createOrder(self, order_code, description, date, client, status=False):
         try:
@@ -42,6 +43,22 @@ class Database:
             self.conn.commit()
         except Exception as e:
             print(e)
+
+    def addTheme(self, dark, mid, light):
+        try:
+            self.cursor.execute("""INSERT INTO Theme (dark, mid, light) VALUES (?,?,?)""",
+                                (dark, mid, light))
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+
+    def deleteTheme(self):
+        self.cursor.execute(f"DELETE * FROM Theme")
+        self.conn.commit()
+
+    def getTheme(self):
+        self.cursor.execute("SELECT * FROM Theme")
+        return self.cursor.fetchone()
 
     async def getPantones(self):
         await asyncio.sleep(1)
@@ -145,6 +162,8 @@ class Database:
         self.conn.close()
 
 # db = Database()
+# print(db.getTheme())
+# print(db.getTheme())
 # print(db.getPantones())
 # db.editClient(1,address='Chiredzi')
 # print(db.getClientById(2))

@@ -5,7 +5,7 @@ from components.appbar_components import MyAppBar
 from components.orders_components import MyDataRow
 import datetime
 from controller import generate_order_number, convertdate
-from custom_colors.brown_palette import Palette
+
 from database import Database
 
 
@@ -21,10 +21,11 @@ class OrdersPage(ft.View):
         self.basket = basket
 
         self.db = Database()
+        self.theme = self.db.getTheme()
 
         self.appbar = MyAppBar("Orders")
 
-        self.bgcolor = Palette.THEME_LIGHT
+        self.bgcolor = self.theme[2]
 
         self.sidebar = SideBar(self.page)
         self.datatable = ft.Ref[ft.DataTable]()
@@ -46,7 +47,7 @@ class OrdersPage(ft.View):
                         ),
                         
                         ft.Container(
-                            bgcolor=Palette.THEME_DARK,
+                            bgcolor=self.theme[0],
                             expand=True,
                             padding=3,
                             content=ft.SafeArea(

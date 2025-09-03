@@ -4,7 +4,7 @@ from components.side_bar_component import SideBar
 from components.appbar_components import MyAppBar
 from controller import teeImages, seacrchColorGarment
 import flet.canvas as cv
-from custom_colors.brown_palette import Palette
+from database import Database
 
 
 
@@ -20,7 +20,10 @@ class DesignerPage(ft.View):
 
         self.appbar = MyAppBar("Designer")
 
-        self.bgcolor = Palette.THEME_LIGHT
+        self.db = Database()
+        self.theme = self.db.getTheme()
+
+        self.bgcolor = self.theme[2]
 
         self.sidebar = SideBar(self.page)
         self.test = ft.Ref[ft.Container]()
@@ -169,7 +172,7 @@ class DesignerPage(ft.View):
             ft.BottomAppBar(
                 shadow_color="black",
                 height=50,
-                bgcolor=Palette.THEME_DARK,
+                bgcolor=self.theme[0],
                 content=ft.Row(
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     controls=[
@@ -180,9 +183,9 @@ class DesignerPage(ft.View):
                                 ft.PopupMenuButton(
                                     shadow_color="black",
                                     elevation=5,
-                                    bgcolor=Palette.MID_COLOR,
+                                    bgcolor=self.theme[1],
                                     # shadow=ft.BoxShadow(blur_radius=5, color=ft.Colors.BLACK45, offset=ft.Offset(2,2)),
-                                    icon=ft.Icons.MENU, icon_color=Palette.THEME_LIGHT,
+                                    icon=ft.Icons.MENU, icon_color=self.theme[2],
                                     items=[
                                         ft.PopupMenuItem(text="New MockUp", icon=ft.Icons.ADD),
                                         ft.PopupMenuItem(text="Save MockUp", icon=ft.Icons.SAVE),

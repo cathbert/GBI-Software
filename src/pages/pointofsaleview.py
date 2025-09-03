@@ -3,7 +3,6 @@ from flet_route import Params, Basket
 from components.side_bar_component import SideBar
 from components.appbar_components import MyAppBar
 from components.product_component import Product
-from custom_colors.brown_palette import Palette
 from controller import teeImages, generate_order_number, seacrchColorGarment
 from database import Database
 import datetime
@@ -21,6 +20,7 @@ class POSPage(ft.View):
         self.basket = basket
 
         self.db = Database()
+        self.theme = self.db.getTheme()
 
         self.test = ft.Ref[ft.Image]()
         self.order_list = ft.Ref[ft.ListView]()
@@ -30,7 +30,7 @@ class POSPage(ft.View):
 
         self.appbar = MyAppBar("Point of Sale")
 
-        self.bgcolor = Palette.THEME_LIGHT
+        self.bgcolor = self.theme[2]
 
         self.sidebar = SideBar(self.page)
         self.search_field = ft.Ref[ft.TextField]()
@@ -76,13 +76,13 @@ class POSPage(ft.View):
                         ),
                         padding=7,
                         border_radius=5,
-                        bgcolor=Palette.MID_COLOR,
+                        bgcolor=self.theme[1],
                         content=ft.Row(
                             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                             controls=[
                                 ft.FilledButton(
                                     "New Order",
-                                    bgcolor=Palette.THEME_DARK,
+                                    bgcolor=self.theme[0],
                                     on_click=self.newOrder
                                 ),
                                 ft.Row(
@@ -90,8 +90,8 @@ class POSPage(ft.View):
                                         ft.TextField(
                                             ref=self.search_field,
                                             label='Search',
-                                            label_style=ft.TextStyle(color=Palette.THEME_LIGHT),
-                                            border_color=Palette.THEME_LIGHT,
+                                            label_style=ft.TextStyle(color=self.theme[2]),
+                                            border_color=self.theme[2],
                                             on_change=self.search,
                                             disabled=True
                                         ),
@@ -113,7 +113,7 @@ class POSPage(ft.View):
                         ),
                         expand=True, 
                         border_radius=5,
-                        bgcolor=Palette.MID_COLOR,
+                        bgcolor=self.theme[1],
                         content=ft.GridView(
                                 ref = self.my_grid,
                                 disabled = True,
@@ -139,7 +139,7 @@ class POSPage(ft.View):
                                                 ),
                                                 ft.Container(
                                                     #opacity=0.5,
-                                                    bgcolor=Palette.THEME_DARK,
+                                                    bgcolor=self.theme[0],
                                                     border_radius=ft.border_radius.only(0,0,5,5),
                                                     alignment=ft.alignment.center,
                                                     margin=ft.margin.only(0,-30,0,0),
@@ -174,7 +174,7 @@ class POSPage(ft.View):
                 expand=True,
                 width=200,
                 height=200,
-                color=Palette.MID_COLOR
+                color=self.theme[1]
             )
         )
 
@@ -189,7 +189,7 @@ class POSPage(ft.View):
             col=3, 
             expand=True, 
             border_radius=5,
-            bgcolor=Palette.MID_COLOR, 
+            bgcolor=self.theme[1], 
             content=ft.Column(
                 spacing=1,
                 controls=[
@@ -211,7 +211,7 @@ class POSPage(ft.View):
                         )
                     ),
                     ft.Divider(
-                        color=Palette.THEME_LIGHT
+                        color=self.theme[2]
                     ),
                     ft.Container(
                         content=ft.Dropdown(
@@ -236,7 +236,7 @@ class POSPage(ft.View):
                     ft.Container(
                         expand=True,
                         margin=3,
-                        bgcolor=Palette.THEME_LIGHT,
+                        bgcolor=self.theme[2],
                         height=500,
                         content=ft.ListView(
                             ref=self.order_list,
@@ -259,8 +259,8 @@ class POSPage(ft.View):
                             controls=[
                                 ft.ElevatedButton(
                                     text="Create Order",
-                                    color=Palette.THEME_LIGHT,
-                                    bgcolor=Palette.THEME_DARK,
+                                    color=self.theme[2],
+                                    bgcolor=self.theme[0],
                                     on_click=self.create_order
                                     # style=ft.ButtonStyle(
                                     #     color=ft.Colors.ORANGE,
@@ -270,7 +270,7 @@ class POSPage(ft.View):
                                 ft.ElevatedButton(
                                     text="Cancel Order",
                                     color=ft.Colors.RED,
-                                    bgcolor=Palette.THEME_DARK,
+                                    bgcolor=self.theme[0],
                                     on_click=self.cancelOrder
                                     # style=ft.ButtonStyle(
                                     #     color=ft.Colors.ORANGE,
@@ -467,7 +467,7 @@ class POSPage(ft.View):
                         ),
                         ft.Container(
                             #opacity=0.5,
-                            bgcolor=Palette.THEME_DARK,
+                            bgcolor=self.theme[0],
                             border_radius=ft.border_radius.only(0,0,5,5),
                             alignment=ft.alignment.center,
                             margin=ft.margin.only(0,-30,0,0),
@@ -519,7 +519,7 @@ class POSPage(ft.View):
                     trailing=ft.PopupMenuButton(
                         popup_animation_style=ft.AnimationStyle(200, curve=ft.AnimationCurve.EASE_IN_EXPO),
                         icon=ft.Icons.MENU, 
-                        icon_color=Palette.THEME_DARK,
+                        icon_color=self.theme[0],
                         items=[
                             ft.PopupMenuItem(
                                 ref = self.colors,

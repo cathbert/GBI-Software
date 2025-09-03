@@ -2,7 +2,6 @@ import flet as ft
 from flet_route import Params, Basket
 from components.side_bar_component import SideBar
 from components.appbar_components import MyAppBar
-from custom_colors.brown_palette import Palette
 from database import Database
 from components.clients_components import MyClientDataRow
 from controller import verifyPhoneNumber, validateEmail, generateEmail
@@ -20,10 +19,11 @@ class ClientPage(ft.View):
         self.basket = basket
 
         self.db = Database()
+        self.theme = self.db.getTheme()
 
         self.appbar = MyAppBar("Clients")
 
-        self.bgcolor = Palette.THEME_LIGHT
+        self.bgcolor = self.theme[2]
 
         self.sidebar = SideBar(self.page)
         self.datatable = ft.Ref[ft.DataTable]()
@@ -57,7 +57,7 @@ class ClientPage(ft.View):
                             expand=True,
                             controls=[
                                ft.DataTable(
-                                    bgcolor=Palette.MID_COLOR,
+                                    bgcolor=self.theme[1],
                                     ref=self.datatable,
                                     columns=[
                                         ft.DataColumn(ft.Text("ID"), numeric=True),
@@ -114,7 +114,7 @@ class ClientPage(ft.View):
         self.page.open( # type: ignore
             ft.AlertDialog(
                 alignment=ft.alignment.top_center,
-                bgcolor=Palette.THEME_LIGHT,
+                bgcolor=self.theme[2],
                 title=ft.Row(
                     controls=[
                         ft.Text(f"NEW CLIENT", size=14, weight=ft.FontWeight.BOLD),
@@ -122,7 +122,7 @@ class ClientPage(ft.View):
                     ]
                 ),
                 content=ft.Container(
-                    bgcolor=Palette.THEME_LIGHT,
+                    bgcolor=self.theme[2],
                     width=700,
                     expand=True,
                     content=ft.Column(
@@ -130,7 +130,7 @@ class ClientPage(ft.View):
                         controls=[
                             ft.Divider(
                                 thickness=.5,
-                                color=Palette.THEME_DARK
+                                color=self.theme[0]
                             ),
                             ft.Row(
                                 alignment=ft.MainAxisAlignment.SPACE_EVENLY,

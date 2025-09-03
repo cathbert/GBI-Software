@@ -1,25 +1,24 @@
 import flet as ft
 import datetime
 from flet_timer.flet_timer import Timer
+from database import Database
 
 class MyAppBar(ft.AppBar):
     def __init__(self, page_name):
         super().__init__()
 
         self.page_name = page_name
-
-        self.THEME_DARK = "#643a1e"
-        self.MID_COLOR = "#a45520"
-        self.THEME_LIGHT = "#bb824d"
+        self.db = Database()
+        self.theme = self.db.getTheme()
 
         self.leading=ft.Icon(ft.Icons.POINT_OF_SALE)
-        self.bgcolor=self.THEME_DARK
-        self.color=self.THEME_LIGHT
+        self.bgcolor=self.theme[0]
+        self.color=self.theme[2]
         self.elevation=7
         self.shadow_color="black"
         self.title=ft.ListTile(
             title=ft.Text(value="GRUMPY BEAR INKS 0.0.1 ", weight=ft.FontWeight.W_600, color=ft.Colors.ORANGE),
-            subtitle=ft.Text(value="Built by MucaIT 2025®©", italic=True, color=self.THEME_LIGHT)
+            subtitle=ft.Text(value="Built by MucaIT 2025®©", italic=True, color=self.theme[2])
         )
         self.timer = Timer(name="timer", interval_s=1, callback=self.refresh)
         self.clock = ft.Ref[ft.Text]()
@@ -51,6 +50,11 @@ class MyAppBar(ft.AppBar):
                         text="About",
                     ),
                     ft.PopupMenuItem(
+                        icon=ft.Icons.SETTINGS,
+                        text="Settings",
+                        on_click=self.open_settings
+                    ),
+                    ft.PopupMenuItem(
                         icon=ft.Icons.LOGOUT,
                         text="Exit",
                         on_click=self.Logout
@@ -69,4 +73,31 @@ class MyAppBar(ft.AppBar):
     def refresh(self):
         self.clock.current.value = datetime.datetime.now().strftime("%H:%M:%S")
         self.clock.current.update()
+
+    def open_settings(self, e):
+        self.page.open( # type: ignore
+            ft.AlertDialog(
+                title=ft.Text("SETTINGS"),
+                content=ft.Container(
+                    width=700,
+                    height=400,
+                    content=ft.Column(
+                        controls=[
+                            ft.Dropdown(
+                                # ref=self.color_formats,
+                                width=150,
+                                options=[
+                                    ft.dropdown.Option("Light"),
+                                    ft.dropdown.Option("Green"),
+                                    ft.dropdown.Option("Brown"),
+                                    # ft.dropdown.Option("HSL"),
+                                ],
+                                label="Themes",
+                                value="Light",
+                            )
+                        ]
+                    )
+                )
+            )
+        )
     

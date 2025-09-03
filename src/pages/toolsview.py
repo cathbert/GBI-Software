@@ -7,6 +7,7 @@ from custom_colors.brown_palette import Palette
 from tools.pantone import loadPantoneColors
 from database import Database
 import asyncio
+from tools.pantone import searchPantoneUsingHex
 
 class ToolPage(ft.View):
     def __init__(self, page:ft.Page, params:Params, basket:Basket):
@@ -24,7 +25,8 @@ class ToolPage(ft.View):
 
         self.page.client_storage.remove("pantones")
 
-        
+        self.color_formats = ft.Ref[ft.Dropdown]()
+        self.pantones_grid = ft.Ref[ft.Dropdown]()
 
         self.appbar = MyAppBar("Tools")
 
@@ -50,14 +52,16 @@ class ToolPage(ft.View):
                                     bgcolor=ft.Colors.WHITE,
                                     border=ft.InputBorder.NONE,
                                     suffix_icon=ft.Icons.SEARCH,  
+                                    on_change=self.searchPantone
                                 ),
                                 ft.Dropdown(
+                                    ref=self.color_formats,
                                     width=150,
                                     options=[
                                         ft.dropdown.Option("HEX"),
                                         ft.dropdown.Option("RGB"),
                                         ft.dropdown.Option("HSV"),
-                                        ft.dropdown.Option("LSV"),
+                                        ft.dropdown.Option("HSL"),
                                     ],
                                     label="Color Format",
                                     value="HEX",
@@ -69,6 +73,7 @@ class ToolPage(ft.View):
                         padding=ft.padding.only(left=10, top=-5, right=10, bottom=10),
                         expand=True,
                         content=ft.GridView(
+                            ref=self.pantones_grid,
                             expand=1,
                             runs_count=5,
                             max_extent=200,
@@ -101,6 +106,21 @@ class ToolPage(ft.View):
                 ]
             )
         ]
+
+    def searchPantone(self, e):
+        print(self.color_formats.current.value)
+        if self.color_formats.current.value == "HEX":
+            e.control.prefix_text='HEX '
+            # print(searchPantoneUsingHex(hex_color=e.control.value))
+        elif self.color_formats.current.value == "RGB":
+            e.control.prefix_text='(R,G,B) '
+        elif self.color_formats.current.value == "HSV":
+            e.control.prefix_text='(H,S,V) '
+        elif self.color_formats.current.value == "HSL":
+            e.control.prefix_text='(H,S,L) '
+        e.control.update()
+        print(e.control.value)
+
 
 class ColorBox(ft.Container):
     def __init__(self, pantone:str, name:str, color_hex:str):

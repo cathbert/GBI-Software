@@ -1,12 +1,12 @@
 import flet as ft
-
+from database import Database
 
 class SideBar(ft.Stack):
     def __init__(self, page:ft.Page):
         super().__init__()
-        self.THEME_DARK = "#643a1e"
-        self.MID_COLOR = "#a45520"
-        self.THEME_LIGHT = "#bb824d"
+
+        self.db = Database()
+        self.theme = self.db.getTheme()
 
         self.opacity=0.7
         self.offset=ft.Offset(-0.88, 0)
@@ -20,7 +20,7 @@ class SideBar(ft.Stack):
             ft.Container(
                     border_radius=ft.border_radius.only(0,10,0,10),
                     expand=True,
-                    bgcolor=self.THEME_DARK,
+                    bgcolor=self.theme[0],
                     width=300,
                     height=660,
                     padding=ft.padding.only(8,35,10,0),
@@ -28,7 +28,7 @@ class SideBar(ft.Stack):
                     content=ft.Column(
                         controls=[
                             ft.Divider(
-                                color=self.THEME_LIGHT
+                                color=self.theme[2]
                             ),
                             ft.Column(
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -36,13 +36,13 @@ class SideBar(ft.Stack):
                                     ft.TextButton(
                                         text="Dashboard",
                                         icon=ft.Icons.DASHBOARD,
-                                        icon_color=self.THEME_LIGHT,
+                                        icon_color=self.theme[2],
                                         style=ft.ButtonStyle(
-                                            color=self.THEME_LIGHT,
+                                            color=self.theme[2],
                                             elevation=5,
                                             icon_size=22,
                                             bgcolor="#251f00",
-                                            overlay_color = self.MID_COLOR,
+                                            overlay_color = self.theme[1],
                                             shadow_color="black"
                                         ),
                                         on_click=self.goToDashbord
@@ -50,13 +50,13 @@ class SideBar(ft.Stack):
                                     ft.TextButton(
                                         text="Point of sale",
                                         icon=ft.Icons.POINT_OF_SALE,
-                                        icon_color=self.THEME_LIGHT,
+                                        icon_color=self.theme[2],
                                         style=ft.ButtonStyle(
-                                            color=self.THEME_LIGHT,
+                                            color=self.theme[2],
                                             elevation=5,
                                             icon_size=22,
                                             bgcolor="#251f00",
-                                            overlay_color = self.MID_COLOR,
+                                            overlay_color = self.theme[1],
                                             shadow_color="black"
                                         ),
                                         on_click=self.goToPointOfSale
@@ -64,13 +64,13 @@ class SideBar(ft.Stack):
                                     ft.TextButton(
                                         text="Orders",
                                         icon=ft.Icons.WALLET,
-                                        icon_color=self.THEME_LIGHT,
+                                        icon_color=self.theme[2],
                                         style=ft.ButtonStyle(
-                                            color=self.THEME_LIGHT,
+                                            color=self.theme[2],
                                             elevation=5,
                                             icon_size=22,
                                             bgcolor="#251f00",
-                                            overlay_color = self.MID_COLOR,
+                                            overlay_color = self.theme[1],
                                             shadow_color="black"
                                         ),
                                         on_click=self.goToOrders
@@ -78,13 +78,13 @@ class SideBar(ft.Stack):
                                     ft.TextButton(
                                         text="Designer",
                                         icon=ft.Icons.DESIGN_SERVICES,
-                                        icon_color=self.THEME_LIGHT,
+                                        icon_color=self.theme[2],
                                         style=ft.ButtonStyle(
-                                            color=self.THEME_LIGHT,
+                                            color=self.theme[2],
                                             elevation=5,
                                             icon_size=22,
                                             bgcolor="#251f00",
-                                            overlay_color = self.MID_COLOR,
+                                            overlay_color = self.theme[1],
                                             shadow_color="black"
                                         ),
                                         on_click=self.goToDesigner
@@ -92,13 +92,13 @@ class SideBar(ft.Stack):
                                     ft.TextButton(
                                         text="Clients",
                                         icon=ft.Icons.PEOPLE,
-                                        icon_color=self.THEME_LIGHT,
+                                        icon_color=self.theme[2],
                                         style=ft.ButtonStyle(
-                                            color=self.THEME_LIGHT,
+                                            color=self.theme[2],
                                             elevation=5,
                                             icon_size=22,
                                             bgcolor="#251f00",
-                                            overlay_color = self.MID_COLOR,
+                                            overlay_color = self.theme[1],
                                             shadow_color="black"
                                         ),
                                         on_click=self.goToClients
@@ -106,13 +106,13 @@ class SideBar(ft.Stack):
                                     ft.TextButton(
                                         text="Tools",
                                         icon=ft.Icons.GARAGE,
-                                        icon_color=self.THEME_LIGHT,
+                                        icon_color=self.theme[2],
                                         style=ft.ButtonStyle(
-                                            color=self.THEME_LIGHT,
+                                            color=self.theme[2],
                                             elevation=5,
                                             icon_size=22,
                                             bgcolor="#251f00",
-                                            overlay_color = self.MID_COLOR,
+                                            overlay_color = self.theme[1],
                                             shadow_color="black"
                                         ),
                                         on_click=self.goToTools
@@ -120,20 +120,20 @@ class SideBar(ft.Stack):
                                 ]
                             ),
                                     ft.Divider(
-                                        color=self.THEME_LIGHT
+                                        color=self.theme[2]
                                     ),
                                     ft.Row(
                                         controls=[
                                             ft.TextButton(
                                                 text="Close Application",
                                                 icon=ft.Icons.EXIT_TO_APP,
-                                                icon_color=self.THEME_LIGHT,
+                                                icon_color=self.theme[2],
                                                 style=ft.ButtonStyle(
-                                                    color=self.THEME_LIGHT,
+                                                    color=self.theme[2],
                                                     elevation=5,
                                                     icon_size=22,
                                                     bgcolor="#251f00",
-                                                    overlay_color = self.MID_COLOR,
+                                                    overlay_color = self.theme[1],
                                                     shadow_color="black"
                                                 ),
                                             ),
@@ -144,7 +144,7 @@ class SideBar(ft.Stack):
                 ),
                 ft.Container(
                     padding=ft.padding.only(10,0,0,0),
-                    bgcolor=self.THEME_DARK,
+                    bgcolor=self.theme[0],
                     border_radius=25,
                     width=340,
                     height=40,
@@ -154,12 +154,12 @@ class SideBar(ft.Stack):
                             ft.Text(
                                 "Menu", 
                                 size=22,
-                                color=self.THEME_LIGHT
+                                color=self.theme[2]
                             ),
                             ft.IconButton(
                                 ref=self.open_close_sidebar,
                                 icon=ft.Icons.ARROW_FORWARD_IOS,
-                                icon_color=self.THEME_LIGHT,
+                                icon_color=self.theme[2],
                                 on_click=self.open_close_sidebar_w,
                                 rotate=0,
                                 animate_rotation=ft.Animation(600, curve=ft.AnimationCurve.ELASTIC_OUT)

@@ -15,8 +15,11 @@ def main(page: ft.Page):
     
     page.theme_mode="light" # type: ignore
     page.fonts={
-        "digital_font": "src/assets/fonts/DS-DIGIT.TTF"
+        "digital_font": "src/assets/fonts/DS-DIGIT.TTF",
+        "redditmid": "src/assets/fonts/RedditSans-Medium.ttf"
     }
+
+    page.theme = ft.Theme(font_family="redditmid")
 
     define_routes = [
         path(url="/login",view=LoginPage, clear=True),
@@ -33,7 +36,7 @@ def main(page: ft.Page):
     # =========================END ROUTES SECTION =============================================>
  
     if page.client_storage.get("token"):
-        page.go("/tools")
+        page.go("/pointofsale")
     else:
         page.go("/login")
 

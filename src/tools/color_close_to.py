@@ -4,7 +4,7 @@ import colorsys
 
 # print(webcolors.hex_to_name("#6ab123"))
 
-def closest_color(rgb_color):
+def rgb_closest_to_color(rgb_color):
     min_colours = {}
     for name in webcolors.names("css3"):
         r_c, g_c, b_c = webcolors.name_to_rgb(name)
@@ -14,4 +14,4 @@ def closest_color(rgb_color):
         min_colours[(rd + gd + bd)] = name
     return min_colours[min(min_colours.keys())]
 
-print(closest_color((0, 0, 255)))    
+print(rgb_closest_to_color((0, 0, 255)))    

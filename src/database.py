@@ -24,6 +24,7 @@ class Database:
                             colors INTEGER,
                             FOREIGN KEY (order_id) REFERENCES Orders (id)
                             )""")
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS Pantones (code TEXT UNIQUE, name TEXT UNIQUE,hex TEXT UNIQUE)""")
         
     def createOrder(self, order_code, description, date, client, status=False):
         try:
@@ -33,6 +34,14 @@ class Database:
             return True
         except Exception as e:
             return False
+        
+    def addPantone(self, code:str, name:str, hex:str):
+        try:
+            self.cursor.execute("""INSERT INTO Pantones (code,name,hex) VALUES (?,?,?)""",
+                                (code,name,hex))
+            self.conn.commit()
+        except Exception as e:
+            print(e)
 
     def createOrderItem(self, item, order_id, qty, colors):
 

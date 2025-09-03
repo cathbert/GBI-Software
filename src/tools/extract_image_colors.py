@@ -52,5 +52,9 @@ def hsv_to_rgb(h, s, v):
     r, g, b = colorsys.hsv_to_rgb(h, s, v)
     return int(r * 255), int(g * 255), int(b * 255)
 
-for color in palette:
-    print(f"{color} {color_to_hex(color)}")
+# for color in palette:
+#     print(f"{color} {color_to_hex(color)}")
+
+test=zip(["C","Y","M","K"], color_to_cmyk((73, 30, 255)))
+print([i for i in test])  # Blue
+  # Black

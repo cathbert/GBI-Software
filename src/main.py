@@ -33,7 +33,7 @@ def main(page: ft.Page):
     # =========================END ROUTES SECTION =============================================>
  
     if page.client_storage.get("token"):
-        page.go("/clients")
+        page.go("/tools")
     else:
         page.go("/login")
 

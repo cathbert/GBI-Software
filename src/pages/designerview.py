@@ -223,8 +223,9 @@ class DesignerPage(ft.View):
         self.test.current.update()
 
     def add_design(self, e):
-        print("Adding design")
-        self.test.current.content = ft.Image(src="src/assets/GBI-LOGO.png")
+        image =  self.file_picker.pick_files(allow_multiple=False, allowed_extensions=["png", "jpg", "jpeg"])
+        print(image)
+        self.test.current.content = ft.Image(src=image[0].path, scale=0.4) # type: ignore
         self.test.current.update()
 
     def change_loc(self, e: ft.DragUpdateEvent):

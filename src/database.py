@@ -43,6 +43,10 @@ class Database:
         except Exception as e:
             print(e)
 
+    def getPantones(self):
+        self.cursor.execute("SELECT * FROM Pantones")
+        return self.cursor.fetchall()
+
     def createOrderItem(self, item, order_id, qty, colors):
 
         self.cursor.execute("""INSERT INTO OrderItem (item, order_id, qty, colors)
@@ -140,6 +144,7 @@ class Database:
         self.conn.close()
 
 # db = Database()
+# print(db.getPantones())
 # db.editClient(1,address='Chiredzi')
 # print(db.getClientById(2))
 # print(db.getOrderByCode("djh575"))

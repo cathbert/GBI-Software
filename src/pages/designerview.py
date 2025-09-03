@@ -55,7 +55,7 @@ class DesignerPage(ft.View):
                         ),
                     ),
                     ft.Container(
-                        
+                        margin=ft.margin.only(top=-200),
                         ref=self.design_area,   
                     ),
                     ft.Container(
@@ -143,13 +143,14 @@ class DesignerPage(ft.View):
                 ]
             )
         ) 
-
+        self.file_picker = ft.FilePicker(on_result=self.on_dialog_result)
         self.designer_controls = ft.Container(
             ft.ResponsiveRow(
                 controls=[
                     self.body_container,
                     self.designs_list,
-                    self.garment_list_container
+                    self.garment_list_container,
+                    self.file_picker
                 ]
             )
         )
@@ -177,13 +178,17 @@ class DesignerPage(ft.View):
                             vertical_alignment=ft.CrossAxisAlignment.CENTER,
                             controls=[
                                 ft.PopupMenuButton(
+                                    shadow_color="black",
+                                    elevation=5,
+                                    bgcolor=Palette.MID_COLOR,
+                                    # shadow=ft.BoxShadow(blur_radius=5, color=ft.Colors.BLACK45, offset=ft.Offset(2,2)),
                                     icon=ft.Icons.MENU, icon_color=Palette.THEME_LIGHT,
                                     items=[
-                                        ft.PopupMenuItem(text="New MockUp"),
-                                        ft.PopupMenuItem(text="Save MockUp"),
-                                        ft.PopupMenuItem(text="Load Design", on_click=self.add_design),
-                                        ft.PopupMenuItem(text="Clear Design", on_click=self.clear_design),
-                                        ft.PopupMenuItem(text="Settings"),
+                                        ft.PopupMenuItem(text="New MockUp", icon=ft.Icons.ADD),
+                                        ft.PopupMenuItem(text="Save MockUp", icon=ft.Icons.SAVE),
+                                        ft.PopupMenuItem(text="Load Design", on_click=self.add_design, icon=ft.Icons.FILE_OPEN),
+                                        ft.PopupMenuItem(text="Clear Design",icon=ft.Icons.CLEAR_ALL, on_click=self.clear_design),
+                                        ft.PopupMenuItem(text="Settings", icon=ft.Icons.SETTINGS),
                                     ]
                                 ),
                                 ft.Slider(min=2, max=22, divisions=20, label="{value}%", on_change=self.change_size)
@@ -194,6 +199,14 @@ class DesignerPage(ft.View):
                 )
             )
         ]
+
+    def on_dialog_result(self, e: ft.FilePickerResultEvent):
+        print(e.files)
+        if e.files:
+            self.design_area.current.content = ft.Image(src=e.files[0].path)
+            self.design_area.current.update()
+            self.palette_area.current.content = ft.Text(e.files[0].name)
+            self.palette_area.current.update()
 
     def change_size(self, e):
         if self.test.current.content:
@@ -257,7 +270,7 @@ class DesignerPage(ft.View):
 
     def load_image(self, e):
         print(f"Loading {e.control.data}")
-        self.design_area.current.content = ft.Image(src=e.control.data)
+        self.design_area.current.content = ft.Image(src=e.control.data, scale=0.6)
         self.design_area.current.update()
         self.palette_area.current.content = ft.Text(e.control.title.value)
         self.palette_area.current.update()

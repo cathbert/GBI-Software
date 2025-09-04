@@ -14,9 +14,14 @@ from barcode.writer import ImageWriter
 
 
 def teeImages():
-    
     garment_names = [i.lstrip("src\\assets\\garments-images\\").rstrip(".png") for i in glob.glob("src\\assets\\garments-images\\*.png")]
     garment_paths = glob.glob("src\\assets\\garments-images\\*.png")
+
+    return list(zip(garment_names, garment_paths))
+
+def teeImagesFront():
+    garment_names = [i.lstrip("src\\assets\\tees\\").rstrip(".png") for i in glob.glob("src\\assets\\tees\\*.png")]
+    garment_paths = glob.glob("src\\assets\\tees\\*.png")
 
     return list(zip(garment_names, garment_paths))
 # print(teeImages())

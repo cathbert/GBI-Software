@@ -3,7 +3,7 @@ from flet_route import Params, Basket
 from components.side_bar_component import SideBar
 from components.appbar_components import MyAppBar
 from components.product_component import Product
-from controller import teeImages, generate_order_number, seacrchColorGarment
+from controller import teeImagesFront, generate_order_number, seacrchColorGarment
 from database import Database
 import datetime
 from receipt_generator import Report
@@ -153,7 +153,7 @@ class POSPage(ft.View):
                                                 
                                             ]
                                         )
-                                    ) for product in teeImages()
+                                    ) for product in teeImagesFront()
                                 ], # [Product(title=i[0], image=i[1]) for i in teeImages() ],
                                 expand=1,
                                 runs_count=5,
@@ -506,7 +506,7 @@ class POSPage(ft.View):
                     title=ft.Text(e.control.content.controls[1].data['title'], size=12),
                     subtitle=ft.Row(
                         controls=[
-                            ft.IconButton(ft.Icons.REMOVE, on_click=self.reduce_qty),
+                            ft.IconButton(ft.Icons.REMOVE, on_click=self.reduce_qty, on_long_press=self.delete_item),
                             ft.Text("Qty:", size=10, italic=True), 
                             ft.Text("1", size=10, weight=ft.FontWeight.BOLD),
                             ft.Row(
@@ -558,9 +558,24 @@ class POSPage(ft.View):
                 ),
             )
             self.order_list.current.update()
+
+    def delete_item(self, e):
+        tile = e.control.parent.parent
+        tile.parent.controls.pop(tile.parent.controls.index(tile))
+        e.control.parent.update()
+        # print(e.control.parent.parent.parent.controls.index(tile))
+        tile.visible=False
+        tile.update()
         
     def reduce_qty(self, e):
         current_value = int(e.control.parent.controls[2].value)
+        tile = e.control.parent.parent
+        if current_value == 1:
+            e.control.parent.parent.parent.controls.pop(e.control.parent.parent.parent.controls.index(tile))
+            e.control.parent.update()
+        # print(e.control.parent.parent.parent.controls.index(tile))
+            tile.visible=False
+            tile.update()
         e.control.parent.controls[2].value = str(current_value - 1)
         e.control.parent.update()
 

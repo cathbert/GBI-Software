@@ -9,7 +9,7 @@ class SideBar(ft.Stack):
         self.theme = self.db.getTheme()
 
         self.opacity=0.7
-        self.offset=ft.Offset(-0.88, 0)
+        self.offset=ft.Offset(-0.9, 0)
         self.animate_offset=ft.Animation(400, ft.AnimationCurve.EASE_IN_OUT)
         self.animate_opacity=True
         self.animate_position=True
@@ -18,9 +18,15 @@ class SideBar(ft.Stack):
         
         self.controls=[
             ft.Container(
+                    shadow=ft.BoxShadow(
+                        spread_radius=0.5,
+                        color=self.theme[8],
+                        blur_radius=15,
+                        blur_style=ft.ShadowBlurStyle.OUTER
+                    ),
                     border_radius=ft.border_radius.only(0,10,0,10),
                     expand=True,
-                    bgcolor=self.theme[0],
+                    bgcolor=self.theme[5],
                     width=300,
                     height=660,
                     padding=ft.padding.only(8,35,10,0),
@@ -143,10 +149,16 @@ class SideBar(ft.Stack):
                     )
                 ),
                 ft.Container(
+                    shadow=ft.BoxShadow(
+                        spread_radius=0.5,
+                        color=self.theme[8],
+                        blur_radius=6,
+                        blur_style=ft.ShadowBlurStyle.INNER
+                    ),
                     padding=ft.padding.only(10,0,0,0),
-                    bgcolor=self.theme[0],
-                    border_radius=25,
-                    width=340,
+                    bgcolor=self.theme[5],
+                    border_radius=ft.border_radius.only(0,25,0,25),
+                    width=360,
                     height=40,
                     content=ft.Row(
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -154,12 +166,13 @@ class SideBar(ft.Stack):
                             ft.Text(
                                 "Menu", 
                                 size=22,
-                                color=self.theme[2]
+                                color=self.theme[8],
+                                font_family="reddit-bold"
                             ),
                             ft.IconButton(
                                 ref=self.open_close_sidebar,
                                 icon=ft.Icons.ARROW_FORWARD_IOS,
-                                icon_color=self.theme[2],
+                                icon_color=self.theme[8],
                                 on_click=self.open_close_sidebar_w,
                                 rotate=0,
                                 animate_rotation=ft.Animation(600, curve=ft.AnimationCurve.ELASTIC_OUT)
@@ -170,7 +183,7 @@ class SideBar(ft.Stack):
             ]
         
     def open_close_sidebar_w(self, e):
-        if (self.offset.x == -0.88): # type: ignore
+        if (self.offset.x == -0.9): # type: ignore
             self.open_sidebar(e)
         else:
             self.close_sidebar(e)
@@ -195,7 +208,7 @@ class SideBar(ft.Stack):
                 self.open_close_sidebar.current.icon=ft.Icons.ARROW_FORWARD_IOS
                 self.open_close_sidebar.current.rotate = 0
                 self.open_close_sidebar.current.update()
-                self.offset = ft.Offset(-0.88, 0)
+                self.offset = ft.Offset(-0.9, 0)
                 self.opacity = 0.7
                 self.update() 
 

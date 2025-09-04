@@ -2,6 +2,7 @@ import flet as ft
 import datetime
 from flet_timer.flet_timer import Timer
 from database import Database
+from custom_colors import beautiful_blue, golden_chandelier, neutral_palette, shovel_knight, dairy_made
 
 class MyAppBar(ft.AppBar):
     def __init__(self, page_name):
@@ -87,17 +88,81 @@ class MyAppBar(ft.AppBar):
                                 # ref=self.color_formats,
                                 width=150,
                                 options=[
-                                    ft.dropdown.Option("Light"),
-                                    ft.dropdown.Option("Green"),
-                                    ft.dropdown.Option("Brown"),
+                                    ft.dropdown.Option(key="Beautiful Blue"),
+                                    ft.dropdown.Option(key="Golden Chandelier"),
+                                    ft.dropdown.Option(key="Neutral"),
+                                    ft.dropdown.Option(key="Shovel Knight"),
+                                    ft.dropdown.Option(key="Dairy Made"),
                                     # ft.dropdown.Option("HSL"),
                                 ],
                                 label="Themes",
                                 value="Light",
+                                on_change=self.change_theme
                             )
                         ]
                     )
                 )
             )
         )
-    
+        
+    def change_theme(self, e):
+        if e.control.value == 'Beautiful Blue':
+            self.db.deleteTheme()
+            self.db.addTheme(beautiful_blue.Palette.BLEND_100,
+                                beautiful_blue.Palette.BLEND_200,
+                                beautiful_blue.Palette.BLEND_300,
+                                beautiful_blue.Palette.BLEND_400,
+                                beautiful_blue.Palette.BLEND_500,
+                                beautiful_blue.Palette.BLEND_600,
+                                beautiful_blue.Palette.BLEND_700,
+                                beautiful_blue.Palette.BLEND_800,
+                                beautiful_blue.Palette.BLEND_900)
+            self.page.update()
+        elif e.control.value == 'Golden Chandelier':
+            self.db.deleteTheme()
+            self.db.addTheme(golden_chandelier.Palette.BLEND_100,
+                                golden_chandelier.Palette.BLEND_200,
+                                golden_chandelier.Palette.BLEND_300,
+                                golden_chandelier.Palette.BLEND_400,
+                                golden_chandelier.Palette.BLEND_500,
+                                golden_chandelier.Palette.BLEND_600,
+                                golden_chandelier.Palette.BLEND_700,
+                                golden_chandelier.Palette.BLEND_800,
+                                golden_chandelier.Palette.BLEND_900)
+            self.page.update()
+        elif e.control.value == 'Neutral':
+            self.db.deleteTheme()
+            self.db.addTheme(neutral_palette.Palette.BLEND_100,
+                                neutral_palette.Palette.BLEND_200,
+                                neutral_palette.Palette.BLEND_300,
+                                neutral_palette.Palette.BLEND_400,
+                                neutral_palette.Palette.BLEND_500,
+                                neutral_palette.Palette.BLEND_600,
+                                neutral_palette.Palette.BLEND_700,
+                                neutral_palette.Palette.BLEND_800,
+                                neutral_palette.Palette.BLEND_900)
+            self.page.update() 
+        elif e.control.value == 'Shovel Knight':
+            self.db.deleteTheme()
+            self.db.addTheme(shovel_knight.Palette.BLEND_100,
+                                shovel_knight.Palette.BLEND_200,
+                                shovel_knight.Palette.BLEND_300,
+                                shovel_knight.Palette.BLEND_400,
+                                shovel_knight.Palette.BLEND_500,
+                                shovel_knight.Palette.BLEND_600,
+                                shovel_knight.Palette.BLEND_700,
+                                shovel_knight.Palette.BLEND_800,
+                                shovel_knight.Palette.BLEND_900)
+            self.page.update() 
+        elif e.control.value == 'Dairy Made':
+            self.db.deleteTheme()
+            self.db.addTheme(dairy_made.Palette.BLEND_100,
+                                dairy_made.Palette.BLEND_200,
+                                dairy_made.Palette.BLEND_300,
+                                dairy_made.Palette.BLEND_400,
+                                dairy_made.Palette.BLEND_500,
+                                dairy_made.Palette.BLEND_600,
+                                dairy_made.Palette.BLEND_700,
+                                dairy_made.Palette.BLEND_800,
+                                dairy_made.Palette.BLEND_900)
+            self.page.update() 

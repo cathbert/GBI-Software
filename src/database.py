@@ -54,7 +54,7 @@ class Database:
             print(e)
 
     def deleteTheme(self):
-        self.cursor.execute(f"DELETE * FROM MyTheme")
+        self.cursor.execute(f"DELETE FROM MyTheme")
         self.conn.commit()
 
     def getTheme(self):

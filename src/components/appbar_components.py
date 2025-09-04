@@ -2,7 +2,7 @@ import flet as ft
 import datetime
 from flet_timer.flet_timer import Timer
 from database import Database
-from custom_colors import beautiful_blue, golden_chandelier, neutral_palette, shovel_knight, dairy_made
+from custom_colors import sapphire_splendour,beautiful_blue, golden_chandelier, neutral_palette, shovel_knight, dairy_made, walk_in_the_park
 
 class MyAppBar(ft.AppBar):
     def __init__(self, page_name):
@@ -12,7 +12,7 @@ class MyAppBar(ft.AppBar):
         self.db = Database()
         self.theme = self.db.getTheme()
 
-        self.leading=ft.Icon(ft.Icons.POINT_OF_SALE)
+        self.leading=ft.Icon(ft.Icons.POINT_OF_SALE, color=self.theme[2])
         self.bgcolor=self.theme[8]
         self.color=self.theme[6]
         self.elevation=7
@@ -45,6 +45,7 @@ class MyAppBar(ft.AppBar):
             ft.Text(value=self.page_name, color=ft.Colors.WHITE),
             ft.PopupMenuButton(
                 icon=ft.Icons.MENU,
+                icon_color=self.theme[2],
                 items=[
                     ft.PopupMenuItem(
                         icon=ft.Icons.INFO,
@@ -93,6 +94,8 @@ class MyAppBar(ft.AppBar):
                                     ft.dropdown.Option(key="Neutral"),
                                     ft.dropdown.Option(key="Shovel Knight"),
                                     ft.dropdown.Option(key="Dairy Made"),
+                                    ft.dropdown.Option(key="Walk in the park"),
+                                    ft.dropdown.Option(key="Sapphire Splendour")
                                     # ft.dropdown.Option("HSL"),
                                 ],
                                 label="Themes",
@@ -117,7 +120,7 @@ class MyAppBar(ft.AppBar):
                                 beautiful_blue.Palette.BLEND_700,
                                 beautiful_blue.Palette.BLEND_800,
                                 beautiful_blue.Palette.BLEND_900)
-            self.page.update()
+            self.page.update() # type: ignore
         elif e.control.value == 'Golden Chandelier':
             self.db.deleteTheme()
             self.db.addTheme(golden_chandelier.Palette.BLEND_100,
@@ -129,7 +132,7 @@ class MyAppBar(ft.AppBar):
                                 golden_chandelier.Palette.BLEND_700,
                                 golden_chandelier.Palette.BLEND_800,
                                 golden_chandelier.Palette.BLEND_900)
-            self.page.update()
+            self.page.update() # type: ignore
         elif e.control.value == 'Neutral':
             self.db.deleteTheme()
             self.db.addTheme(neutral_palette.Palette.BLEND_100,
@@ -141,7 +144,7 @@ class MyAppBar(ft.AppBar):
                                 neutral_palette.Palette.BLEND_700,
                                 neutral_palette.Palette.BLEND_800,
                                 neutral_palette.Palette.BLEND_900)
-            self.page.update() 
+            self.page.update()  # type: ignore
         elif e.control.value == 'Shovel Knight':
             self.db.deleteTheme()
             self.db.addTheme(shovel_knight.Palette.BLEND_100,
@@ -153,7 +156,7 @@ class MyAppBar(ft.AppBar):
                                 shovel_knight.Palette.BLEND_700,
                                 shovel_knight.Palette.BLEND_800,
                                 shovel_knight.Palette.BLEND_900)
-            self.page.update() 
+            self.page.update()  # type: ignore
         elif e.control.value == 'Dairy Made':
             self.db.deleteTheme()
             self.db.addTheme(dairy_made.Palette.BLEND_100,
@@ -165,4 +168,29 @@ class MyAppBar(ft.AppBar):
                                 dairy_made.Palette.BLEND_700,
                                 dairy_made.Palette.BLEND_800,
                                 dairy_made.Palette.BLEND_900)
-            self.page.update() 
+            self.page.update()  # type: ignore
+
+        elif e.control.value == 'Walk in the park':
+            self.db.deleteTheme()
+            self.db.addTheme(walk_in_the_park.Palette.BLEND_100,
+                                walk_in_the_park.Palette.BLEND_200,
+                                walk_in_the_park.Palette.BLEND_300,
+                                walk_in_the_park.Palette.BLEND_400,
+                                walk_in_the_park.Palette.BLEND_500,
+                                walk_in_the_park.Palette.BLEND_600,
+                                walk_in_the_park.Palette.BLEND_700,
+                                walk_in_the_park.Palette.BLEND_800,
+                                walk_in_the_park.Palette.BLEND_900)
+            self.page.update()  # type: ignore
+        elif e.control.value == 'Sapphire Splendour':
+            self.db.deleteTheme()
+            self.db.addTheme(sapphire_splendour.Palette.BLEND_100,
+                                sapphire_splendour.Palette.BLEND_200,
+                                sapphire_splendour.Palette.BLEND_300,
+                                sapphire_splendour.Palette.BLEND_400,
+                                sapphire_splendour.Palette.BLEND_500,
+                                sapphire_splendour.Palette.BLEND_600,
+                                sapphire_splendour.Palette.BLEND_700,
+                                sapphire_splendour.Palette.BLEND_800,
+                                sapphire_splendour.Palette.BLEND_900)
+            self.page.update()  # type: ignore

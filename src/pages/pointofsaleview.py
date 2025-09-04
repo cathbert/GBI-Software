@@ -370,6 +370,7 @@ class POSPage(ft.View):
 
                 self.db.createOrder(order_code=self.ORDER_NUMBER.current.value, description="", date=datetime.datetime.now(), client=self.client.current.value)
                 order = self.db.getOrderByCode(self.ORDER_NUMBER.current.value)
+                print(current_order)
                 for item in current_order:
                     self.db.createOrderItem(item=item.title.value, order_id=order[0], qty=item.subtitle.controls[2].value, colors=item.subtitle.controls[3].controls[1].value) # type: ignore
                 
@@ -379,7 +380,8 @@ class POSPage(ft.View):
                     client_contact=f"{client[4]}",
                     client_email=f"{client[3]}",
                     client_address=f"{client[5]}",
-                    order_date=order[3]
+                    order_date=order[3],
+                    items=[current_order]
                 )
                 self.ORDER_NUMBER.current.value = ""
                 self.ORDER_NUMBER.current.update()

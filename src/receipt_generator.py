@@ -15,13 +15,14 @@ pdfmetrics.registerFont(TTFont("RobotoBoldItalic", "src/assets/fonts/Roboto-Semi
 
 
 class Report(canvas.Canvas):
-    def __init__(self, order_ref, client_name, client_contact, client_email, client_address, order_date):
+    def __init__(self, order_ref, client_name, client_contact, client_email, client_address, order_date,items:list):
         self.order_ref = order_ref
         self.client_name = client_name
         self.client_contact = client_contact
         self.client_email = client_email
         self.client_address = client_address
         self.order_date = order_date
+        self.items = items
 
         super().__init__(filename=f"src/reports/{self.order_ref}.pdf", pagesize=A4)
         self.w, self.h = A4
@@ -114,8 +115,8 @@ class Report(canvas.Canvas):
         amountlabel.textLine("Amount(R)")
         self.drawText(amountlabel)
 
-        for i in range(0,60, 20):
-            self.__addItem(i)
+        for i in self.items:
+            self.__addItem(60, i) 
 
         # Draw a horizontal line Divider.
         x = 50
@@ -171,7 +172,7 @@ class Report(canvas.Canvas):
         text.textLine(f":  {self.client_address}")
         self.drawText(text)
 
-    def __addItem(self, adder):
+    def __addItem(self, adder, re_item):
         tet = 350
         item = self.beginText(50, self.h - tet + adder)
         item.setFont("RobotoLight", 12)

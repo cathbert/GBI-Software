@@ -115,8 +115,10 @@ class Report(canvas.Canvas):
         amountlabel.textLine("Amount(R)")
         self.drawText(amountlabel)
 
+        adder = 15
         for i in self.items:
-            self.__addItem(60, i) 
+            self.__addItem(adder, i) 
+            adder += 15
 
         # Draw a horizontal line Divider.
         x = 50
@@ -175,27 +177,27 @@ class Report(canvas.Canvas):
     def __addItem(self, adder, re_item):
         tet = 350
         item = self.beginText(50, self.h - tet + adder)
-        item.setFont("RobotoLight", 12)
-        item.textLine("Product")
+        item.setFont("RobotoSemiBold", 11)
+        item.textLine(re_item[0])
         self.drawText(item)
 
-        qty = self.beginText(160, self.h - tet + adder)
-        qty.setFont("RobotoLight", 12)
-        qty.textLine("10")
+        qty = self.beginText(165, self.h - tet + adder)
+        qty.setFont("RobotoLight", 11)
+        qty.textLine('x'+re_item[1])
         self.drawText(qty)
 
         desc = self.beginText(200, self.h - tet + adder)
-        desc.setFont("RobotoLight", 12)
+        desc.setFont("RobotoLight", 11)
         desc.textLine("This is an awesome description")
         self.drawText(desc)
 
         colors = self.beginText(400, self.h - tet + adder)
-        colors.setFont("RobotoLight", 12)
-        colors.textLine("3")
+        colors.setFont("RobotoLight", 11)
+        colors.textLine(re_item[2])
         self.drawText(colors)
 
         amount = self.beginText(480, self.h - tet + adder)
-        amount.setFont("RobotoLight", 12)
+        amount.setFont("RobotoLight", 11)
         amount.textLine("100.00")
         self.drawText(amount)
 

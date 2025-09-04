@@ -75,7 +75,12 @@ class MyDataRow(ft.DataRow):
             e.control.parent.open=False
             e.control.parent.update()
             # self.parent.update() # type: ignore
-            os.remove(f"src/reports/{self.order_number}.pdf")
+            try:
+                os.remove(f"src/reports/{self.order_number}.pdf")
+            except FileNotFoundError:
+                pass
+            self.visible = False
+            self.update()
             self.parent.parent.update() # type: ignore
 
         

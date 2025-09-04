@@ -7,19 +7,22 @@ from pages.designerview import DesignerPage
 from pages.ordersview import OrdersPage
 from pages.clientsview import ClientPage
 from pages.toolsview import ToolPage
-import asyncio
+from database import Database
 
-
+db = Database()
+theme = db.getTheme()
 
 def main(page: ft.Page):
     
     page.theme_mode="light" # type: ignore
     page.fonts={
         "digital_font": "src/assets/fonts/DS-DIGIT.TTF",
-        "redditmid": "src/assets/fonts/RedditSans-Medium.ttf"
+        "reddit-light": "src/assets/fonts/RedditSans-Light.ttf",
+        "reddit-bold": "src/assets/fonts/RedditSans-Bold.ttf"
     }
 
-    page.theme = ft.Theme(font_family="redditmid")
+    page.theme = ft.Theme(font_family="reddit-light",
+                          elevated_button_theme=ft.ElevatedButtonTheme(bgcolor=theme[7]))
 
     define_routes = [
         path(url="/login",view=LoginPage, clear=True),
@@ -36,7 +39,7 @@ def main(page: ft.Page):
     # =========================END ROUTES SECTION =============================================>
  
     if page.client_storage.get("token"):
-        page.go("/pointofsale")
+        page.go("/clients")
     else:
         page.go("/login")
 

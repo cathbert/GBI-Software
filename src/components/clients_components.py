@@ -11,15 +11,17 @@ class MyClientDataRow(ft.DataRow):
         self.email = email
         self.address = address
 
+        self.db = Database()
+        self.theme = self.db.getTheme()
 
         super().__init__(
                 cells = [
-                ft.DataCell(ft.Text(self.id, color=ft.Colors.BLACK)),
-                ft.DataCell(ft.Text(self.firstname, color=ft.Colors.BLACK)),
-                ft.DataCell(ft.Text(self.lastname, color=ft.Colors.BLACK)),
-                ft.DataCell(ft.Text(self.phone, color=ft.Colors.BLACK)),
-                ft.DataCell(ft.Text(self.email, color=ft.Colors.BLACK)),
-                ft.DataCell(ft.Text(self.address, color=ft.Colors.BLACK)),
+                ft.DataCell(ft.Text(self.id, color=self.theme[8])),
+                ft.DataCell(ft.Text(self.firstname, color=self.theme[8])),
+                ft.DataCell(ft.Text(self.lastname, color=self.theme[8])),
+                ft.DataCell(ft.Text(self.phone, color=self.theme[8])),
+                ft.DataCell(ft.Text(self.email, color=self.theme[8])),
+                ft.DataCell(ft.Text(self.address, color=self.theme[8])),
             ]
         )
 
@@ -54,8 +56,8 @@ class MyClientDataRow(ft.DataRow):
                    value=False,
                    on_change=self.setEditMode
                 ),
-                ft.ElevatedButton(text="Update", on_click=self.updateClient, disabled=True),
-                ft.ElevatedButton(text="Delete", on_click=self.deleteClient)
+                ft.ElevatedButton(color=self.theme[0],text="Update", on_click=self.updateClient, disabled=True),
+                ft.ElevatedButton(color=self.theme[0],bgcolor=self.theme[6],text="Delete", on_click=self.deleteClient)
             ]
         ))
 

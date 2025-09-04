@@ -15,18 +15,15 @@ class MyDataRow(ft.DataRow):
         self.change_status_alert = ft.Ref[ft.AlertDialog]()
 
         self.db = Database()
-
-        self.THEME_DARK = "#643a1e"
-        self.MID_COLOR = "#a45520"
-        self.THEME_LIGHT = "#bb824d"
+        self.theme = self.db.getTheme()
 
         super().__init__(
             cells = [
-            ft.DataCell(content=ft.Text(value=self.id, color=self.THEME_LIGHT)),
-            ft.DataCell(ft.Text(self.order_number, color=self.THEME_LIGHT)),
-            ft.DataCell(ft.Text(self.description, color=self.THEME_LIGHT)),
-            ft.DataCell(ft.Text(str(self.date), color=self.THEME_LIGHT)),
-            ft.DataCell(ft.Text(self.client, color=self.THEME_LIGHT)),
+            ft.DataCell(content=ft.Text(value=self.id, color=self.theme[8])),
+            ft.DataCell(ft.Text(self.order_number, color=self.theme[8])),
+            ft.DataCell(ft.Text(self.description, color=self.theme[8])),
+            ft.DataCell(ft.Text(str(self.date), color=self.theme[8])),
+            ft.DataCell(ft.Text(self.client, color=self.theme[8])),
             ft.DataCell(ft.IconButton(ft.Icons.CHECK, icon_color="#9bff65", on_click=self.change_order_status) if self.completed else ft.IconButton(ft.Icons.CANCEL, icon_color="#ff2e2e", on_click=self.change_order_status)),
         ]
         )
@@ -36,7 +33,7 @@ class MyDataRow(ft.DataRow):
     def change_order_status(self, e):
         self.page.open(ft.AlertDialog( # type: ignore
             ref=self.change_status_alert,
-            title=ft.Text("Do you wish to change Order status?"),
+            title=ft.Text("Do you wish to change Order status?", font_family="reddit-bold"),
             content=ft.Row(
                 controls=[
                     ft.Switch(label="Current Status", value=self.cells[0].content.value), # type: ignore
@@ -44,7 +41,7 @@ class MyDataRow(ft.DataRow):
                 ]
             ),
             actions=[
-                ft.ElevatedButton("Change Order Status", on_click=self.change)
+                ft.ElevatedButton("Change Order Status", on_click=self.change, bgcolor=self.theme[6], color=self.theme[0])
             ]
         ))
         self.update()

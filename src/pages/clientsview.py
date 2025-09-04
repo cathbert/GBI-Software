@@ -57,15 +57,16 @@ class ClientPage(ft.View):
                             expand=True,
                             controls=[
                                ft.DataTable(
-                                    bgcolor=self.theme[1],
+                                    bgcolor=self.theme[3],
+                                    heading_row_color=self.theme[6],
                                     ref=self.datatable,
                                     columns=[
-                                        ft.DataColumn(ft.Text("ID"), numeric=True),
-                                        ft.DataColumn(ft.Text("First name")),
-                                        ft.DataColumn(ft.Text("Last name")),
-                                        ft.DataColumn(ft.Text("Phone")),
-                                        ft.DataColumn(ft.Text("Email")), 
-                                        ft.DataColumn(ft.Text("Address")),
+                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="ID"), numeric=True),
+                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="First name")),
+                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Last name")),
+                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Phone")),
+                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Email")), 
+                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Address")),
                                     ],
                                     rows=[
                                         MyClientDataRow(
@@ -114,7 +115,7 @@ class ClientPage(ft.View):
         self.page.open( # type: ignore
             ft.AlertDialog(
                 alignment=ft.alignment.top_center,
-                bgcolor=self.theme[2],
+                bgcolor=self.theme[4],
                 title=ft.Row(
                     controls=[
                         ft.Text(f"NEW CLIENT", size=14, weight=ft.FontWeight.BOLD),
@@ -130,7 +131,7 @@ class ClientPage(ft.View):
                         controls=[
                             ft.Divider(
                                 thickness=.5,
-                                color=self.theme[0]
+                                color=self.theme[8]
                             ),
                             ft.Row(
                                 alignment=ft.MainAxisAlignment.SPACE_EVENLY,
@@ -195,7 +196,7 @@ class ClientPage(ft.View):
                     )
                 ),
                 actions=[
-                    ft.ElevatedButton(text="Create", on_click=self.add_new_client),
+                    ft.ElevatedButton(color=self.theme[0], bgcolor=self.theme[6],text="Create", on_click=self.add_new_client),
                 ]
             )
         )

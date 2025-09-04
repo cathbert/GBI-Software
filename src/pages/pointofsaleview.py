@@ -82,7 +82,7 @@ class POSPage(ft.View):
                             controls=[
                                 ft.FilledButton(
                                     "New Order",
-                                    bgcolor=self.theme[0],
+                                    bgcolor=self.theme[6],
                                     on_click=self.newOrder
                                 ),
                                 ft.Row(
@@ -90,8 +90,8 @@ class POSPage(ft.View):
                                         ft.TextField(
                                             ref=self.search_field,
                                             label='Search',
-                                            label_style=ft.TextStyle(color=self.theme[2]),
-                                            border_color=self.theme[2],
+                                            label_style=ft.TextStyle(color=self.theme[8]),
+                                            border_color=self.theme[6],
                                             on_change=self.search,
                                             disabled=True
                                         ),
@@ -197,7 +197,7 @@ class POSPage(ft.View):
                         padding=5,
                         content=ft.Row(
                             controls=[
-                                ft.Icon(ft.Icons.RECEIPT),
+                                ft.Icon(ft.Icons.RECEIPT, color=self.theme[6]),
                                 ft.Text(
                                     value="INVOICE: ",
                                     weight=ft.FontWeight.BOLD,
@@ -247,7 +247,7 @@ class POSPage(ft.View):
                         content=ft.Row(
                             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                             controls=[
-                                ft.Text('TOTAL', size=20),
+                                ft.Text('TOTAL', size=20, color=self.theme[8]),
                                 ft.Text('300.00', size=20, weight=ft.FontWeight.BOLD),
                             ]
                         ),
@@ -259,8 +259,8 @@ class POSPage(ft.View):
                             controls=[
                                 ft.ElevatedButton(
                                     text="Create Order",
-                                    color=self.theme[2],
-                                    bgcolor=self.theme[0],
+                                    color=self.theme[0],
+                                    bgcolor=self.theme[8],
                                     on_click=self.create_order
                                     # style=ft.ButtonStyle(
                                     #     color=ft.Colors.ORANGE,
@@ -270,7 +270,7 @@ class POSPage(ft.View):
                                 ft.ElevatedButton(
                                     text="Cancel Order",
                                     color=ft.Colors.RED,
-                                    bgcolor=self.theme[0],
+                                    bgcolor=self.theme[8],
                                     on_click=self.cancelOrder
                                     # style=ft.ButtonStyle(
                                     #     color=ft.Colors.ORANGE,

@@ -61,17 +61,17 @@ class OrdersPage(ft.View):
                                             expand=True,
                                             controls=[
                                                 ft.DataTable(
+                                                    bgcolor=self.theme[3],
+                                                    heading_row_color=self.theme[6],
                                                     show_bottom_border=True,
                                                     ref=self.datatable,
-                                                    
-                                                    heading_row_color=ft.Colors.ORANGE,
                                                     columns=[
-                                                        ft.DataColumn(ft.Text("ID")),
-                                                        ft.DataColumn(ft.Text("Order No.")),
-                                                        ft.DataColumn(ft.Text("Description")),
-                                                        ft.DataColumn(ft.Text("Date")),
-                                                        ft.DataColumn(ft.Text("Client")),
-                                                        ft.DataColumn(ft.Text("Completed"))
+                                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="ID")),
+                                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Order No.")),
+                                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Description")),
+                                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Date")),
+                                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Client")),
+                                                        ft.DataColumn(ft.Text(font_family="reddit-bold",value="Completed"))
                                                     ],
                                                     rows=[
                                                         

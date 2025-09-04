@@ -37,7 +37,7 @@ class MyAppBar(ft.AppBar):
                 # padding=ft.padding.only(5,0,5,0),
                 width=150,
                 border_radius=ft.border_radius.only(0,0,10,10),
-                content=ft.Text(ref=self.clock, color=ft.Colors.BLUE_ACCENT, value="00:00.00", font_family='digital_font', size=30),
+                content=ft.Text(ref=self.clock, color=self.theme[2], value="00:00.00", font_family='digital_font', size=30),
                 # margin=ft.margin.only(0.0,6,0)
             ),
             self.timer,

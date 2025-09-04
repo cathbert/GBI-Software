@@ -172,7 +172,7 @@ class DesignerPage(ft.View):
             ft.BottomAppBar(
                 shadow_color="black",
                 height=50,
-                bgcolor=self.theme[0],
+                bgcolor=self.theme[7],
                 content=ft.Row(
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     controls=[
@@ -181,7 +181,7 @@ class DesignerPage(ft.View):
                             vertical_alignment=ft.CrossAxisAlignment.CENTER,
                             controls=[
                                 ft.PopupMenuButton(
-                                    shadow_color="black",
+                                    shadow_color=self.theme[7],
                                     elevation=5,
                                     bgcolor=self.theme[1],
                                     # shadow=ft.BoxShadow(blur_radius=5, color=ft.Colors.BLACK45, offset=ft.Offset(2,2)),
@@ -194,10 +194,10 @@ class DesignerPage(ft.View):
                                         ft.PopupMenuItem(text="Settings", icon=ft.Icons.SETTINGS),
                                     ]
                                 ),
-                                ft.Slider(min=2, max=22, divisions=20, label="{value}%", on_change=self.change_size)
+                                ft.Slider(width=100,thumb_color=self.theme[6],min=2, max=22, divisions=20, label="{value}%", on_change=self.change_size)
                             ]
                         ),
-                        ft.Text("© 2025 GBI All rights reserved", size=12, color="white", text_align=ft.TextAlign.RIGHT)
+                        ft.Text("© 2025 GBI All rights reserved", size=12, color=self.theme[3], text_align=ft.TextAlign.RIGHT)
                     ]
                 )
             )

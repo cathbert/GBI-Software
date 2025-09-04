@@ -12,8 +12,8 @@ class MyAppBar(ft.AppBar):
         self.theme = self.db.getTheme()
 
         self.leading=ft.Icon(ft.Icons.POINT_OF_SALE)
-        self.bgcolor=self.theme[0]
-        self.color=self.theme[2]
+        self.bgcolor=self.theme[8]
+        self.color=self.theme[6]
         self.elevation=7
         self.shadow_color="black"
         self.title=ft.ListTile(
@@ -28,9 +28,9 @@ class MyAppBar(ft.AppBar):
         self.actions=[
             ft.Container(
                 alignment=ft.alignment.center,
-                bgcolor=ft.Colors.ORANGE,
+                # bgcolor=ft.Colors.ORANGE,
                 gradient = ft.LinearGradient(
-                    colors=[ft.Colors.ORANGE, ft.Colors.TRANSPARENT],
+                    colors=[self.theme[3], ft.Colors.TRANSPARENT],
                     begin=ft.alignment.bottom_center,
                     end=ft.alignment.top_center
                 ),

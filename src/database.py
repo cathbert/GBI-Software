@@ -26,6 +26,7 @@ class Database:
                             )""")
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS Pantones (code TEXT UNIQUE, name TEXT UNIQUE,hex TEXT UNIQUE)""")
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS Theme (dark TEXT UNIQUE, mid TEXT UNIQUE, light TEXT UNIQUE)""")
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS MyTheme (blend_100 TEXT, blend_200 TEXT,blend_300 TEXT,blend_400 TEXT,blend_500 TEXT,blend_600 TEXT,blend_700 TEXT,blend_800 TEXT,blend_900 TEXT)""")
         
     def createOrder(self, order_code, description, date, client, status=False):
         try:
@@ -44,20 +45,20 @@ class Database:
         except Exception as e:
             print(e)
 
-    def addTheme(self, dark, mid, light):
+    def addTheme(self,blend_100,blend_200,blend_300,blend_400,blend_500,blend_600,blend_700,blend_800,blend_900):
         try:
-            self.cursor.execute("""INSERT INTO Theme (dark, mid, light) VALUES (?,?,?)""",
-                                (dark, mid, light))
+            self.cursor.execute("""INSERT INTO MyTheme (blend_100,blend_200,blend_300,blend_400,blend_500,blend_600,blend_700,blend_800,blend_900) VALUES (?,?,?,?,?,?,?,?,?)""",
+                                (blend_100,blend_200,blend_300,blend_400,blend_500,blend_600,blend_700,blend_800,blend_900))
             self.conn.commit()
         except Exception as e:
             print(e)
 
     def deleteTheme(self):
-        self.cursor.execute(f"DELETE * FROM Theme")
+        self.cursor.execute(f"DELETE * FROM MyTheme")
         self.conn.commit()
 
     def getTheme(self):
-        self.cursor.execute("SELECT * FROM Theme")
+        self.cursor.execute("SELECT * FROM MyTheme")
         return self.cursor.fetchone()
 
     async def getPantones(self):

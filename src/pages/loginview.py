@@ -1,7 +1,7 @@
 import flet as ft
 from flet_route import Params, Basket
 import time
-from custom_colors.light_palette import Palette
+from custom_colors.neutral_palette import Palette
 from database import Database
 
 class LoginPage(ft.View):
@@ -14,7 +14,7 @@ class LoginPage(ft.View):
         self.db = Database()
        
         self.theme = self.db.getTheme()
-        self.bgcolor = self.theme[0]
+        self.bgcolor = self.theme[6]
 
         self.progress = ft.Ref[ft.ProgressRing]()
         self.username = ft.Ref[ft.TextField]()
@@ -59,14 +59,14 @@ class LoginPage(ft.View):
                                                     ft.ProgressRing(
                                                         ref=self.progress,
                                                         bgcolor=self.theme[0],
-                                                        color=self.theme[2],
+                                                        color=self.theme[7],
                                                         width=100,
                                                         height=100,
                                                         visible=False
                                                     ),
                                                     ft.Icon(
                                                         ft.Icons.LOCK,
-                                                        color=self.theme[2],
+                                                        color=self.theme[7],
                                                         size=40
                                                     )
                                                 ]
@@ -77,10 +77,11 @@ class LoginPage(ft.View):
                                                 label='Username',
                                                 label_style = ft.TextStyle(color=self.theme[0]),
                                                 text_style = ft.TextStyle(color=self.theme[0]),
-                                                prefix_style = ft.TextStyle(color=ft.Colors.ORANGE),
-                                                fill_color=self.theme[2],
+                                                prefix_style = ft.TextStyle(color=self.theme[4]),
+                                                fill_color=self.theme[4],
                                                 enable_suggestions=True,
                                                 prefix_icon=ft.Icons.VERIFIED_USER,
+                                                
                                                 border=ft.InputBorder.UNDERLINE,
                                                 filled=True
                                             ),
@@ -90,7 +91,7 @@ class LoginPage(ft.View):
                                                 label_style = ft.TextStyle(color=self.theme[0]),
                                                 text_style = ft.TextStyle(color=self.theme[0]),
                                                 filled=True,
-                                                fill_color=self.theme[2],
+                                                fill_color=self.theme[4],
                                                 enable_suggestions=True,
                                                 prefix_icon=ft.Icons.LOCK_PERSON,
                                                 border=ft.InputBorder.UNDERLINE,
@@ -100,8 +101,8 @@ class LoginPage(ft.View):
                                             ),
                                             ft.ElevatedButton(
                                                 icon=ft.Icons.ARROW_FORWARD_IOS,
-                                                icon_color=self.theme[2],
-                                                color=self.theme[2],
+                                                icon_color=self.theme[7],
+                                                color=self.theme[7],
                                                 bgcolor=self.theme[0],
                                                 text="Login",
                                                 width=300,
@@ -129,7 +130,15 @@ class LoginPage(ft.View):
             self.password.current.value = ""
             time.sleep(2)
             if self.db.getTheme() == None: # type: ignore
-                self.db.addTheme(Palette.THEME_DARK, Palette.MID_COLOR,Palette.THEME_LIGHT)
+                self.db.addTheme(Palette.BLEND_100,
+                                 Palette.BLEND_200,
+                                 Palette.BLEND_300,
+                                 Palette.BLEND_400,
+                                 Palette.BLEND_500,
+                                 Palette.BLEND_600,
+                                 Palette.BLEND_700,
+                                 Palette.BLEND_800,
+                                 Palette.BLEND_900,)
             self.page.go("/dashboard") # type: ignore
             
             self.progress.current.visible=False

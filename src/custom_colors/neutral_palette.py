@@ -1,0 +1,11 @@
+class Palette:
+    # Neutral
+    BLEND_100= "#FAFBFC"
+    BLEND_200= "#ECEDF0"
+    BLEND_300= "#DDE0E4"
+    BLEND_400= "#CFD3D8"
+    BLEND_500= "#C2C7CC"
+    BLEND_600= "#989EA3"
+    BLEND_700= "#707679"
+    BLEND_800= "#494D50"
+    BLEND_900= "#222526"

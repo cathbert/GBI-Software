@@ -3,10 +3,8 @@ import flet as ft
 from flet_route import Params, Basket
 from components.side_bar_component import SideBar
 from components.appbar_components import MyAppBar
-from custom_colors.brown_palette import Palette
 from tools.pantone import loadPantoneColors
 from database import Database
-import asyncio
 from tools.pantone import searchPantoneUsingHex
 
 class ToolPage(ft.View):
@@ -18,24 +16,26 @@ class ToolPage(ft.View):
         self.page = page
         self.params = params
         self.basket = basket
+
         self.db = Database()
-        
-        # if self.page.client_storage.get("pantones") is None:
-        #     self.page.client_storage.set("pantones", asyncio.run(self.db.getPantones()))
+        self.theme = self.db.getTheme()        
 
         self.page.client_storage.remove("pantones")
 
         self.color_formats = ft.Ref[ft.Dropdown]()
         self.pantones_grid = ft.Ref[ft.Dropdown]()
+        self.searchPantoneField = ft.Ref[ft.TextField]()
+
+        # self.pantones = asyncio.run(self.db.getPantones())
 
         self.appbar = MyAppBar("Tools")
 
-        self.bgcolor = Palette.THEME_LIGHT
+        self.bgcolor = self.theme[2]
 
         self.sidebar = SideBar(self.page)
 
         self.body=ft.Container(
-            col=9,
+            col=10,
             content=ft.Column(
                 spacing=1,
                 controls=[
@@ -44,18 +44,19 @@ class ToolPage(ft.View):
                         content=ft.Row(
                             controls=[
                                 ft.TextField(
+                                    ref=self.searchPantoneField,
+                                    border_radius=ft.border_radius.only(10,0,0,10),
                                     fill_color=ft.Colors.with_opacity(0.2, ft.Colors.BLACK),
                                     label="Search Pantone Color", 
                                     expand=True,
-                                    filled=True, 
-                                    border_radius=20,
+                                    filled=True,
                                     bgcolor=ft.Colors.WHITE,
                                     border=ft.InputBorder.NONE,
                                     suffix_icon=ft.Icons.SEARCH,  
                                     on_change=self.searchPantone
                                 ),
                                 ft.Dropdown(
-                                    ref=self.color_formats,
+                                    # ref=self.color_formats,
                                     width=150,
                                     options=[
                                         ft.dropdown.Option("HEX"),
@@ -65,6 +66,7 @@ class ToolPage(ft.View):
                                     ],
                                     label="Color Format",
                                     value="HEX",
+                                    on_change=self.change_color_format
                                 )
                             ]
                         )
@@ -81,11 +83,11 @@ class ToolPage(ft.View):
                             spacing=5,
                             run_spacing=5,
                             controls=[
-                                ColorBox(
-                                    pantone=color[0], 
-                                    name=color[1], 
-                                    color_hex=color[2]
-                                ) for color in asyncio.run(self.db.getPantones())
+                                # ColorBox(
+                                #     pantone=color[0], 
+                                #     name=color[1], 
+                                #     color_hex=color[2]
+                                # ) for color in self.pantones
                             ]
                         )
                     )
@@ -93,7 +95,27 @@ class ToolPage(ft.View):
             )
         )
         self.right_bar=ft.Container(
-            col=3
+            
+            col=2,
+            expand=True,
+            bgcolor=ft.Colors.with_opacity(0.2, ft.Colors.BLACK),
+            content=ft.Column(
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                controls=[
+                    ft.OutlinedButton(
+                        text="Pantones", 
+                        height=40, 
+                        width=300, 
+                        
+                    ),
+                    ft.OutlinedButton(
+                        text="Conversion", 
+                        height=40, 
+                        width=300, 
+                        
+                    )
+                ]
+            )
         )
 
         self.controls=[
@@ -101,24 +123,25 @@ class ToolPage(ft.View):
             ft.Stack(
                 expand=True,
                 controls=[
-                    self.body,
+                    ft.ResponsiveRow(
+                        controls=[
+                            self.body,
+                            self.right_bar,
+                        ]
+                    ),
                     self.sidebar,
                 ]
-            )
+            ),
+            
         ]
 
+    def change_color_format(self, e):
+        print(e.control.value)
+        self.searchPantoneField.current.prefix_text=e.control.value+"\t"
+        self.searchPantoneField.current.update()
+
     def searchPantone(self, e):
-        print(self.color_formats.current.value)
-        if self.color_formats.current.value == "HEX":
-            e.control.prefix_text='HEX '
-            # print(searchPantoneUsingHex(hex_color=e.control.value))
-        elif self.color_formats.current.value == "RGB":
-            e.control.prefix_text='(R,G,B) '
-        elif self.color_formats.current.value == "HSV":
-            e.control.prefix_text='(H,S,V) '
-        elif self.color_formats.current.value == "HSL":
-            e.control.prefix_text='(H,S,L) '
-        e.control.update()
+        
         print(e.control.value)
 
 

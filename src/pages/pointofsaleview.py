@@ -59,7 +59,7 @@ class POSPage(ft.View):
         #         ]
         #     )
         # )
-        
+        self.listviewcontainer = ft.Ref[ft.Container]()
         self.body = ft.Container(
             expand=True,
             col=9,
@@ -201,7 +201,7 @@ class POSPage(ft.View):
                                 ft.Text(
                                     value="INVOICE: ",
                                     weight=ft.FontWeight.BOLD,
-                                    color="white"
+                                    color=self.theme[8]
                                 ),
                                 ft.Text(
                                     ref = self.ORDER_NUMBER,
@@ -234,6 +234,7 @@ class POSPage(ft.View):
                         )
                     ),
                     ft.Container(
+                        ref=self.listviewcontainer,
                         expand=True,
                         margin=3,
                         bgcolor=self.theme[2],
@@ -248,7 +249,7 @@ class POSPage(ft.View):
                             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                             controls=[
                                 ft.Text('TOTAL', size=20, color=self.theme[8]),
-                                ft.Text('300.00', size=20, weight=ft.FontWeight.BOLD),
+                                ft.Text('0.00', size=20, weight=ft.FontWeight.BOLD),
                             ]
                         ),
                     ),
@@ -503,7 +504,7 @@ class POSPage(ft.View):
             self.order_list.current.controls.append(
                 ft.ListTile(
                     leading=ft.Image(src=e.control.content.controls[1].data['image']),
-                    title=ft.Text(e.control.content.controls[1].data['title'], size=12),
+                    title=ft.Text(e.control.content.controls[1].data['title'], size=10, font_family="reddit-bold"),
                     subtitle=ft.Row(
                         controls=[
                             ft.IconButton(ft.Icons.REMOVE, on_click=self.reduce_qty, on_long_press=self.delete_item),
@@ -572,7 +573,9 @@ class POSPage(ft.View):
         tile = e.control.parent.parent
         if current_value == 1:
             e.control.parent.parent.parent.controls.pop(e.control.parent.parent.parent.controls.index(tile))
-            e.control.parent.update()
+            self.listviewcontainer.current.bgcolor=self.theme[2]
+            self.listviewcontainer.current.update()
+            # e.control.parent.update()
         # print(e.control.parent.parent.parent.controls.index(tile))
             tile.visible=False
             tile.update()

@@ -44,10 +44,19 @@ class ClientPage(ft.View):
                 controls=[
                     ft.Container(
                         
-                        margin=ft.margin.only(20,10,0,0),
+                        margin=ft.margin.only(40,10,0,0),
                         content=ft.Row(
                             controls=[
-                                ft.OutlinedButton("New Client", on_click=self.form)
+                                ft.OutlinedButton(
+                                    icon_color=self.theme[8],
+                                    icon=ft.Icons.PERSON,
+                                    text="New Client", 
+                                    on_click=self.form,
+                                    style=ft.ButtonStyle(
+                                        color=self.theme[8],
+                                        overlay_color=self.theme[6]
+                                    )
+                                )
                             ]
                         )
                     ),
@@ -115,7 +124,7 @@ class ClientPage(ft.View):
         self.page.open( # type: ignore
             ft.AlertDialog(
                 alignment=ft.alignment.top_center,
-                bgcolor=self.theme[4],
+                bgcolor=self.theme[5],
                 title=ft.Row(
                     controls=[
                         ft.Text(f"NEW CLIENT", size=14, weight=ft.FontWeight.BOLD),
@@ -123,7 +132,7 @@ class ClientPage(ft.View):
                     ]
                 ),
                 content=ft.Container(
-                    bgcolor=self.theme[2],
+                    bgcolor=self.theme[5],
                     width=700,
                     expand=True,
                     content=ft.Column(
@@ -136,6 +145,7 @@ class ClientPage(ft.View):
                             ft.Row(
                                 alignment=ft.MainAxisAlignment.SPACE_EVENLY,
                                 expand=True,
+                                spacing=1,
                                 controls=[
                                     ft.TextField(
                                         ref=self.firstname,

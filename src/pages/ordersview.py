@@ -47,7 +47,7 @@ class OrdersPage(ft.View):
                         ),
                         
                         ft.Container(
-                            bgcolor=self.theme[0],
+                            bgcolor=self.theme[5],
                             expand=True,
                             padding=3,
                             content=ft.SafeArea(
@@ -62,8 +62,10 @@ class OrdersPage(ft.View):
                                             controls=[
                                                 ft.DataTable(
                                                     bgcolor=self.theme[3],
-                                                    heading_row_color=self.theme[6],
+                                                    heading_row_color=self.theme[5],
                                                     show_bottom_border=True,
+                                                    show_checkbox_column=True,
+                                                    vertical_lines=ft.BorderSide(width=1,color=self.theme[5]),
                                                     ref=self.datatable,
                                                     columns=[
                                                         ft.DataColumn(ft.Text(font_family="reddit-bold",value="ID")),

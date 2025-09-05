@@ -6,6 +6,9 @@ from components.appbar_components import MyAppBar
 import matplotlib
 import matplotlib.pyplot as plt
 from database import Database
+import plotly.express as px
+from flet.plotly_chart import PlotlyChart
+import numpy as np
 
 from flet.matplotlib_chart import MatplotlibChart
 
@@ -24,7 +27,7 @@ class DashboardPage(ft.View):
         self.db = Database()
         self.theme = self.db.getTheme()
 
-        self.bgcolor = self.theme[2]
+        self.bgcolor = self.theme[5]
         self.appbar = MyAppBar("Dashboard")
 
         # =========================================BAR CHART========================================
@@ -121,7 +124,31 @@ class DashboardPage(ft.View):
             on_tap=self.sidebar.close_sidebar
         )
 
-        
+        # =======================================MAT LINE===================================
+        # Fixing random state for reproducibility
+        np.random.seed(19680801)
+
+        dt = 0.01
+        t = np.arange(0, 30, dt)
+        nse1 = np.random.randn(len(t))  # white noise 1
+        nse2 = np.random.randn(len(t))  # white noise 2
+
+        # Two signals with a coherent part at 10Hz and a random part
+        s1 = np.sin(2 * np.pi * 10 * t) + nse1
+        s2 = np.sin(2 * np.pi * 10 * t) + nse2
+
+        mfig, axs = plt.subplots(2, 1)
+        axs[0].plot(t, s1, t, s2)
+        axs[0].set_xlim(0, 2)
+        axs[0].set_xlabel("time")
+        axs[0].set_ylabel("s1 and s2")
+        axs[0].grid(True)
+
+        cxy, f = axs[1].cohere(s1, s2, 256, 1.0 / dt)
+        axs[1].set_ylabel("coherence")
+
+        mfig.tight_layout()
+        # ==================================================================================
 
         self.dashboard_controls = ft.Container(
             expand=True,
@@ -151,6 +178,28 @@ class DashboardPage(ft.View):
                             )
                             
                         ]
+                    ),
+                    ft.Tabs(
+                        selected_index=0,
+                        indicator_color=self.theme[3],
+                        divider_color=self.theme[6],
+                        label_color=self.theme[2],
+                        overlay_color=self.theme[6],
+                        tabs=[
+                             ft.Tab(
+                                  text="Overall Sales",
+                                  content=ft.Container(
+                                       col=12,
+                                       content=MatplotlibChart(mfig, expand=True)
+                                  )
+                             ),
+                             ft.Tab(
+                                  text="Text"
+                             ),
+                             ft.Tab(
+                                  text="Text"
+                             )
+                        ]
                     )
                 ]
             )
@@ -162,7 +211,7 @@ class DashboardPage(ft.View):
                 expand=True,
                 controls=[
                     self.dashboard_controls,
-                    self.screen_gesture,
+                    # self.screen_gesture,
                     self.sidebar ,
                     
                 ]

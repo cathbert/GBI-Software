@@ -87,7 +87,7 @@ class DesignerPage(ft.View):
         )
 
         self.images = teeImages()
-        self.imageList = ft.Column(scroll=ft.ScrollMode.AUTO, expand=True)
+        self.imageList = ft.ListView(expand=True)
 
         if self.visible:
             self.populateImages()
@@ -122,22 +122,28 @@ class DesignerPage(ft.View):
 
         self.garment_list_container = ft.Container(
             padding=ft.padding.only(0,3,0,0),
-            bgcolor="white",
+            bgcolor=self.theme[5],
             col=3,
             expand=True,
             content=ft.Column(
                 controls=[
                     ft.TextField(
                         label="Search",
+                        label_style=ft.TextStyle(color=self.theme[3]),
+                        text_style=ft.TextStyle(color=self.theme[3]),
+                        cursor_color=self.theme[3],
                         border_width=0.4,
                         border=ft.InputBorder.UNDERLINE,
                         helper_text="Type garment color",
                         helper_style=ft.TextStyle(
                             size=9
                         ),
+                        fill_color=self.theme[6],
+                        filled=True,
                         on_change=self.search
                     ),
                     ft.Container(
+                        bgcolor=self.theme[5],
                         padding=5,
                         expand=True,
                         content=self.imageList

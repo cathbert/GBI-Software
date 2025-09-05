@@ -123,6 +123,20 @@ class SideBar(ft.Stack):
                                         ),
                                         on_click=self.goToTools
                                     ),
+                                    ft.TextButton(
+                                        text="Inventory",
+                                        icon=ft.Icons.INVENTORY,
+                                        icon_color=self.theme[2],
+                                        style=ft.ButtonStyle(
+                                            color=self.theme[2],
+                                            elevation=5,
+                                            icon_size=22,
+                                            bgcolor="#251f00",
+                                            overlay_color = self.theme[1],
+                                            shadow_color="black"
+                                        ),
+                                        on_click=self.goToInventory
+                                    ),
                                 ]
                             ),
                                     ft.Divider(
@@ -229,4 +243,7 @@ class SideBar(ft.Stack):
 
     def goToTools(self, e):
         self.page.go("/tools") # type: ignore
+
+    def goToInventory(self, e):
+        self.page.go("/inventory") # type: ignore
         

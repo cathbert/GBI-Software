@@ -57,11 +57,12 @@ class MyDataRow(ft.DataRow):
     def data_prev(self,e):
         self.page.open(ft.AlertDialog( # type: ignore
             ref=self.deletion_alert,
+            bgcolor=self.theme[5],
             title=ft.Text("Do you wish to delete Order?"),
             actions_alignment=ft.MainAxisAlignment.SPACE_EVENLY,
             actions=[
-                ft.ElevatedButton("Delete Order", on_click=self.order_deletion),
-                ft.ElevatedButton("Cancel Deletion")
+                ft.ElevatedButton(color=self.theme[2],text="Delete Order", on_click=self.order_deletion),
+                ft.ElevatedButton(color=self.theme[2],text="Cancel Deletion")
             ]
         ))
         # order_number = self.cells[0].content.value # type: ignore

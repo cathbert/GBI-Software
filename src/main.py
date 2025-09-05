@@ -7,6 +7,7 @@ from pages.designerview import DesignerPage
 from pages.ordersview import OrdersPage
 from pages.clientsview import ClientPage
 from pages.toolsview import ToolPage
+from pages.inventoryview import InventoryPage
 from database import Database
 
 db = Database()
@@ -31,7 +32,8 @@ def main(page: ft.Page):
         path(url="/orders",view=OrdersPage, clear=True),
         path(url="/designer",view=DesignerPage, clear=True),
         path(url="/clients",view=ClientPage, clear=True),
-        path(url="/tools",view=ToolPage, clear=True)
+        path(url="/tools",view=ToolPage, clear=True),
+        path(url="/inventory",view=InventoryPage, clear=True)
     ]
 
     Routing(page=page, app_routes=define_routes)
@@ -39,7 +41,7 @@ def main(page: ft.Page):
     # =========================END ROUTES SECTION =============================================>
  
     if page.client_storage.get("token"):
-        page.go("/clients")
+        page.go("/tools")
     else:
         page.go("/login")
 

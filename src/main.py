@@ -22,8 +22,9 @@ def main(page: ft.Page):
         "reddit-bold": "src/assets/fonts/RedditSans-Bold.ttf"
     }
 
-    page.theme = ft.Theme(font_family="reddit-light",
-                          elevated_button_theme=ft.ElevatedButtonTheme(bgcolor=theme[7]))
+    # page.theme = ft.Theme(font_family="reddit-light",
+    #                       elevated_button_theme=ft.ElevatedButtonTheme(bgcolor=theme[7]))
+    page.theme=ft.Theme(color_scheme=ft.ColorScheme(primary=ft.Colors.YELLOW))
 
     define_routes = [
         path(url="/login",view=LoginPage, clear=True),
